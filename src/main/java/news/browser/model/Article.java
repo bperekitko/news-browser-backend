@@ -1,27 +1,61 @@
 package news.browser.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import lombok.Getter;
 
-import java.io.Serializable;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-public class Article implements Serializable {
+@Getter
+public class Article {
     private String author;
     private String title;
     private String description;
+    private Instant publishedAt;
     private String sourceName;
+    private String url;
+    private String urlToImage;
 
-    @JsonProperty("publishedAt")
-    private String date;
+    @JsonGetter("date")
+    public String getPublishedAt() {
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneId.systemDefault()).format(publishedAt);
+    }
 
-    @JsonProperty("url")
-    private String articleUrl;
+    @JsonSetter("publishedAt")
+    public void setPublishedAt(Instant publishedAt) {
+        this.publishedAt = publishedAt;
+    }
 
-    @JsonProperty("urlToImage")
-    private String imageUrl;
+    @JsonGetter("articleUrl")
+    public String getUrl() {
+        return url;
+    }
 
-    @JsonProperty("source")
-    private void parseSourceNameFromJson(Map<String, String> source) {
+    @JsonSetter("url")
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    @JsonGetter("imageUrl")
+    public String getUrlToImage() {
+        return urlToImage;
+    }
+
+    @JsonSetter("urlToImage")
+    public void setUrlToImage(String urlToImage) {
+        this.urlToImage = urlToImage;
+    }
+
+    @JsonGetter("sourceName")
+    public String getSourceName() {
+        return sourceName;
+    }
+
+    @JsonSetter("source")
+    private void setSourceName(Map<String, String> source) {
         this.sourceName = source.get("name");
     }
 }

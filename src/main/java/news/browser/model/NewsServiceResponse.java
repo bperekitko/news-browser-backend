@@ -1,14 +1,12 @@
 package news.browser.model;
 
-import java.io.Serializable;
+import lombok.Getter;
+
 import java.util.List;
 
-public class NewsServiceResponse implements Serializable {
+@Getter
+public class NewsServiceResponse {
     private String status;
-    private int resultsCount;
+    private int totalResults;
     private List<Article> articles;
-
-    public List<Article> getArticles() {
-        return articles;
-    }
 }

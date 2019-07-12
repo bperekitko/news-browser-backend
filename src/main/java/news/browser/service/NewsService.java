@@ -2,6 +2,7 @@ package news.browser.service;
 
 import news.browser.model.Article;
 import news.browser.model.NewsServiceResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,9 +19,14 @@ import java.util.Optional;
 public class NewsService {
     private static final String NEWS_SERVICE_URL_TEMPLATE = "https://newsapi.org/v2/top-headlines?country={0}&category={1}";
 
-    @Value("${newsservice.apikey}")
     private String apiKey;
-    private RestTemplate restTemplate = new RestTemplate();
+    private RestTemplate restTemplate;
+
+    @Autowired
+    public NewsService(@Value("${newsservice.apikey}") String apiKey, RestTemplate restTemplate) {
+        this.apiKey = apiKey;
+        this.restTemplate = restTemplate;
+    }
 
     public List<Article> getArticles(String country, String category) {
         NewsServiceResponse response = getResponse(country, category);
