@@ -1,2 +1,2 @@
-To build the project after cloning the repository run 'mvn spring-boot:run' command.
+To build the project after cloning the repository run 'mvn clean install spring-boot:run' command.
 Default application port will be 8080 (can be changed in application.properties file).
